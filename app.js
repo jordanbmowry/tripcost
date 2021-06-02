@@ -27,7 +27,15 @@ mongo.connect(
 
 app.post('/trip', (req, res) => {
 	const name = req.body.name;
-	trips.insertOne({ name: name }, (err, result) => {});
+	trips.insertOne({ name: name }, (err, result) => {
+		if (err) {
+			console.log(err);
+			res.status(500).json({ err: err });
+			return;
+		}
+		console.log(result);
+		res.status(200).json({ ok: true });
+	});
 });
 
 app.get('/trips', (req, res) => {
