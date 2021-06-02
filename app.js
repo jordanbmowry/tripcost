@@ -3,6 +3,27 @@ const mongo = require('mongodb').MongoClient;
 
 const app = express();
 
+const url = 'mongodb://localhost:27017';
+
+let db;
+
+mongo.connect(
+	url,
+	{
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	},
+	(err, client) => {
+		if (err) {
+			console.error(err);
+			return;
+		}
+		db = client.db('tripcost');
+		trips = db.collection('trips');
+		expenses = db.collection('expenses');
+	}
+);
+
 app.post('/trip', (req, res) => {
 	/* */
 });
