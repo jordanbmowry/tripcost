@@ -69,7 +69,15 @@ app.post('/expense', (req, res) => {
 });
 
 app.get('/expenses', (req, res) => {
-	/* */
+	expenses.find({ trip: req.body.trip }).toArray((err, items) => {
+		if (err) {
+			console.error(err);
+			res.status(err);
+			res.status(500).json({ err: err });
+			return;
+		}
+		res.status(200).json({ trips: items });
+	});
 });
 
 app.listen(3000, (req, res) => {
